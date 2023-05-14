@@ -1,0 +1,9 @@
+{%extens "base.html"%}
+{%block title %}
+welcome
+{%endblock title%}
+
+{%block content%}
+<h1>HELLO {{new_user.first_name}}</h1>
+<p>next page <a href="{%url 'login'%}">login</a></p>
+{%endblock content%}

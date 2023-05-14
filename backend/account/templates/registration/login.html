@@ -1,0 +1,33 @@
+{%extends 'registration/base.html'%}
+{%block title%}
+sign in
+{%endblock title%}
+
+{%block form%}
+<div>
+    {%if user.is_anonymous%}
+
+    <form method="post" action="{%url 'login'%}">
+        {%if form.errors%}
+        <p>login or password are incorrect</p>
+        {%endif%}
+
+        <input type="hidden" name="next" value="{{next}}">
+        {%csrf_token%}
+        <h1 class="h3 mb-3 font-weight-normal">Вход</h1>
+    <label for="inputEmail" class="sr-only">Email</label>
+    <input type="email" id="inputEmail" class="form-control" placeholder="Email" name="username"
+         value="" required="" autofocus="" data-cip-id="inputEmail">
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Пароль"
+         name="password" required="" data-cip-id="inputPassword">
+
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+    </form>
+    {%else%}
+    <p>you are already sign up</p>
+    <p><a href="{{'/'}}">Перейти на главную страницу</a></p>
+    {%endif%}
+</div>
+{%endblock form%}
