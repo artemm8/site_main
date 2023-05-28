@@ -26,6 +26,7 @@ urlpatterns = [
      path("catalog/",include(("myapi.urls", 'catalog'), namespace='catalog')),
      path("cart/",include("cart.urls")),
      path("api/",include("chat.urls")),
+     path("chat/",include("chat.urls")),
      path("",views.view_home,name='home')
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

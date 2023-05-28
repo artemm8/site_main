@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'article',
     'api',
     'rest_framework',
+    'rest_framework.authtoken',
     'rest_framework_jwt',
     'mptt',
     'corsheaders',
@@ -54,8 +55,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -150,31 +151,18 @@ CACHES = {
     }
 }
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAdminUser',
-        'rest_framework.permissions.AllowAny',
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'PAGE_SIZE': 10,
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ),
-    'EXCEPTION_HANDLER': 'rest_framework_json_api.exceptions.exception_handler',
-    'DEFAULT_PAGINATION_CLASS':
-        'rest_framework_json_api.pagination.PageNumberPagination',
-    'DEFAULT_PARSER_CLASSES': (
-        'rest_framework_json_api.parsers.JSONParser',
-        'rest_framework.parsers.FormParser',
-        'rest_framework.parsers.MultiPartParser'
-    ),
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework_json_api.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ),
-'DEFAULT_METADATA_CLASS': 'rest_framework_json_api.metadata.JSONAPIMetadata',
+        'rest_framework.authentication.TokenAuthentication'
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.authentication.TokenAuthentication'
+    ],
+    # 'DEFAULT_RENDERER_CLASSES': [
+    #     # Disables browsable interface
+    #     'rest_framework.renderers.JSONRenderer',
+    # ],
 }
 JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'JWT',

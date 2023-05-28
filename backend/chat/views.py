@@ -1,12 +1,12 @@
-from urllib import response
-from webbrowser import get
+
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions
-from .models import *
-from .serializers import *
-from django.db.models import Q# это логическоя or
+from .models import Room,Chat
+from .serializers import RoomSerializer,ChatSerializers,UserSerializers,ChatPostSerializers
+from django.contrib.auth.models import User
+from django.db.models import Q# это логическоя or'
 #первое что нужно сделать взять записи из базы данных 
 #2 серилизаровать данные в json
 #3 отдаем пользавателю ответ
@@ -45,9 +45,16 @@ class DialogAPI(APIView):
 class AddUserRoomApi(APIView):
     def get(self,request):
         users=User.objects.all()
-        serializers=UserSerializers(users,many=True)
-        return Response(serializers.data)
+        serializer=UserSerializers(users,many=True)
+        return Response(serializer.data)
 
     def post(self,request):
         room=request.data.get("room")
-        name=request.data.get("name")
+        user=request.data.get("user")
+        try:
+            room=Room.objects.get(id=room)
+            room.invited.add(user)
+            room.save()
+            return Response(status=201)
+        except:
+            return Response(status=400)

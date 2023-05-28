@@ -1,6 +1,9 @@
 from rest_framework import serializers
-from django .contrib.auth.models import User
-from .models import *
+# from django .contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from .models import Room,Chat
+
+User=get_user_model()
 
 class UserSerializers(serializers.ModelSerializer):
     class Meta:
@@ -11,7 +14,7 @@ class RoomSerializer(serializers.ModelSerializer):
     invited=UserSerializers(many=True)
     class Meta:
         model=Room
-        fields=("creater","inviter","name","date","id")
+        fields=("id","creater","invited","name","date")
 
 class ChatSerializers(serializers.ModelSerializer):
     user=UserSerializers ()
@@ -22,5 +25,5 @@ class ChatSerializers(serializers.ModelSerializer):
 
 class ChatPostSerializers(serializers.ModelSerializer):
     class Meta:
-        models=Chat
+        model=Chat
         fields=["room","text"]
